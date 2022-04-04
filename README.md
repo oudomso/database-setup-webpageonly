@@ -9,14 +9,15 @@ Allow editing or deleting.
 
 
 ### Server side
-- inside the database setup webpage
 - open up terminal
 - cd to the server folder
+- type "npm install"
 - type "node server.js"
 
 ### Client Side
 
 - cd to the client folder
+- type "npm install"
 - in the terminal type " npm start "
 - It should redirect you to the record webpage
 

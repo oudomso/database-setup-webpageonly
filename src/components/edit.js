@@ -3,9 +3,9 @@ import { useParams, useNavigate } from "react-router";
  
 export default function Edit() {
  const [form, setForm] = useState({
-   name: "",
-   position: "",
-   level: "",
+   doctor: "",
+   patient: "",
+   room: "",
    records: [],
  });
  const params = useParams();
@@ -14,7 +14,7 @@ export default function Edit() {
  useEffect(() => {
    async function fetchData() {
      const id = params.id.toString();
-     const response = await fetch(`http://localhost:5000/record/${params.id.toString()}`);
+     const response = await fetch(`http://localhost:3001/record/${params.id.toString()}`);
  
      if (!response.ok) {
        const message = `An error has occurred: ${response.statusText}`;
@@ -30,6 +30,7 @@ export default function Edit() {
      }
  
      setForm(record);
+     console.log(record);
    }
  
    fetchData();
@@ -47,11 +48,11 @@ export default function Edit() {
  async function onSubmit(e) {
    e.preventDefault();
    const editedPerson = {
-     name: form.name,
-     position: form.position,
-     level: form.level,
+     doctor: form.doctor,
+     patient: form.patient,
+     room: form.room,
    };
- 
+   console.log(editedPerson);
    // This will send a post request to update the data in the database.
    await fetch(`http://localhost:3001/update/${params.id}`, {
      method: "POST",
@@ -70,11 +71,11 @@ export default function Edit() {
   <h3>Update</h3>
   <form onSubmit={onSubmit}>
     <div className="form-group">
-      <label htmlFor="name">Doctor</label>
+      <label htmlFor="doctor">Doctor</label>
       <input
         type="text"
         className="form-control"
-        id="name"
+        id="doctor"
         value={form.doctor}
         onChange={(e) => updateForm({ doctor: e.target.value })}
       />
@@ -94,12 +95,12 @@ export default function Edit() {
       <input
         type="text"
         className="form-control"
-        id="patient"
+        id="room"
         value={form.room}
         onChange={(e) => updateForm({ room: e.target.value })}
       />
     </div>
-  </form>
+  
   <div className="form-group">
          <input
            type="submit"
@@ -107,6 +108,8 @@ export default function Edit() {
            className="btn btn-primary"
          />
        </div>
+
+       </form>
 </div>
  );
 }

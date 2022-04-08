@@ -51,7 +51,39 @@ export default function RecordList() {
    const newRecords = records.filter((el) => el._id !== id);
    setRecords(newRecords);
  }
- 
+ async function updateList(){
+  const response = await fetch(`http://localhost:3001/record/`).then( async (res) => {
+    if (!res.ok) {
+      const message = `An error occurred: ${response.statusText}`;
+      window.alert(message);
+      return;
+    }
+    //ec2-18-118-43-198.us-east-2.compute.amazonaws.com:3010
+    const response2 = await fetch("http://localhost:3010/", {
+    mode: 'no-cors',
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify( res.json()),
+  })
+  .catch(error => {
+    window.alert(error);
+    return;
+  });
+
+  console.log("resp 2");
+  console.log(response2);
+  });
+
+  const records = await response;
+     
+  console.log("resp 1");
+  console.log(records);
+  
+  
+
+ }
  // This method will map out the records on the table
  function recordList() {
    return records.map((record) => {
@@ -68,7 +100,10 @@ export default function RecordList() {
  // This following section will display the table with the records of individuals.
  return (
    <div>
-     <h3>Record List</h3>
+     <h3>Record List <button className="btn btn-link"
+       onClick={updateList}
+     >Update List</button></h3> 
+
      <table className="table table-striped" style={{ marginTop: 20 }}>
        <thead>
          <tr>

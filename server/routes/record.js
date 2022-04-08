@@ -61,7 +61,14 @@ recordRoutes.route("/update/:id").post(function (req, response) {
             patient: req.body.patient,      
             room: req.body.room,    
         }
-    }
+    };
+    
+    db_connect.collection("records").updateOne(myquery, newvalues, function (err, res) {
+      if (err) throw err;
+      console.log(res);
+      response.json(res);
+      
+    });
 });
 
 // This section will help you delete a record
